@@ -1,0 +1,18 @@
+/* ListScroller.css */
+.list-scroller {
+    overflow-x: scroll;
+    white-space: nowrap;
+    max-width: 90%;
+}
+
+.scroll-container {
+    display: flex;
+}
+
+.list-item {
+    flex: 0 0 auto;
+    margin-right: 10px; /* Adjust the spacing between items as needed */
+    padding: 10px;
+    border: 1px solid #ccc;
+    min-width: 200px; /* Set a minimum width for each item */
+}

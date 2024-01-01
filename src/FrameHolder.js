@@ -43,16 +43,18 @@ const FrameHolder = () => {
     return (
         <div className="frame-holder">
             <img src={`data:image/png;base64,${imageData}`} />
-            <input
+            <textarea
                 name="Positive Prompt"
-                type="text"
+                rows="4"
+                //cols="30"
                 placeholder="Positive Prompt"
                 value={input1}
                 onChange={(e) => setInput1(e.target.value)}
             />
-            <input
+            <textarea
                 name="Negative Prompt"
-                type="text"
+                rows="3"
+                //cols="30"
                 placeholder="Negative Prompt"
                 value={input2}
                 onChange={(e) => setInput2(e.target.value)}
