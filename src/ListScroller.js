@@ -3,14 +3,15 @@ import React from 'react';
 import './ListScroller.css';
 import FrameHolder from "./FrameHolder";
 
-const ListScroller = ({ items }) => {
+function ListScroller({items, callback}) {
+    const frameList = items.map(item =>
+        <FrameHolder frame={item} callback={callback} key={item.id}/>
+    );
+
     return (
         <div className="list-scroller">
             <div className="scroll-container">
-                {items.map((item, index) => (
-                    <FrameHolder/>
-                    //{item}
-                ))}
+                {frameList}
             </div>
         </div>
     );
