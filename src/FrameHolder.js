@@ -23,30 +23,64 @@ function FrameHolder({frame, callback}) {
     const [input2, setInput2] = useState(frame.negative);
     const [inputSeed, setInputSeed] = useState(frame.seed);
 
+    const constantPayload = {
+        styles: [
+            "Standard Simple",
+            "Camera",
+            "Detail"
+        ],
+        sampler_name: "DPM++ 2M Karras",
+        denoising_strength: 0.7
+    }
+
     useEffect(() => {
         setInput1(frame.positive);
         setInput2(frame.negative);
         setInputSeed(frame.seed);
     }, [frame]);
 
-    //Test image generation, will be quick but less detailed
-    const handleButton1Click = () => {
-        postImage({
+    //Instant image generation, ugly, but gives insight into composition
+    const handleButton0Click = () => {
+        postImage(Object.assign({}, constantPayload,{
             prompt: input1,
             negative_prompt: input2,
-            steps: 40,
-            enable_hr: false
-        }, setImageData);
+            steps: 10,
+            enable_hr: false,
+            seed: inputSeed
+        }), setImageData);
+    };
+
+    //Test image generation, will be quick but less detailed
+    const handleButton1Click = () => {
+        postImage(Object.assign({}, constantPayload,{
+            prompt: input1,
+            negative_prompt: input2,
+            steps: 30,
+            enable_hr: false,
+            seed: inputSeed
+        }), setImageData);
+    };
+
+    //Hi-Res image generation, will be a bit slow, but much more detailed
+    const handleButton2Click = () => {
+        postImage(Object.assign({}, constantPayload,{
+            prompt: input1,
+            negative_prompt: input2,
+            steps: 30,
+            enable_hr: true,
+            seed: inputSeed
+        }), setImageData);
     };
 
     //Final image generation, will be very slow but detailed
-    const handleButton2Click = () => {
-        postImage({
+    const handleButton3Click = () => {
+        postImage(Object.assign({}, constantPayload,{
             prompt: input1,
             negative_prompt: input2,
             steps: 150,
-            enable_hr: true
-        });
+            enable_hr: true,
+            seed: inputSeed
+        }), setImageData);
     };
 
     const handleMakeInt = (value) => {
@@ -62,7 +96,7 @@ function FrameHolder({frame, callback}) {
 
     return (
         <div className="frame-holder">
-            <img src={`data:image/png;base64,${imageData}`} />
+            <img src={`data:image/png;base64,${imageData}`}/>
             <input
                 name="Seed"
                 value={inputSeed}
@@ -70,22 +104,26 @@ function FrameHolder({frame, callback}) {
             />
             <textarea
                 name="Positive Prompt"
-                rows="4"
-                //cols="30"
+                rows="8"
+                cols="36"
                 placeholder="Positive Prompt"
                 value={input1}
                 onChange={(e) => saveValues(setInput1, e.target.value)}
             />
             <textarea
                 name="Negative Prompt"
-                rows="3"
-                //cols="30"
+                rows="4"
+                cols="36"
                 placeholder="Negative Prompt"
                 value={input2}
                 onChange={(e) => saveValues(setInput2, e.target.value)}
             />
-            <button onClick={handleButton1Click}>Test Generation</button>
-            <button onClick={handleButton2Click}>Final Generation</button>
+            <div>
+                <button onClick={handleButton0Click}><b>Instant</b></button>
+                <button onClick={handleButton1Click}><b>Test</b></button>
+                <button onClick={handleButton2Click}><b>Hi-Res</b></button>
+                <button onClick={handleButton3Click}><b>Final</b></button>
+            </div>
         </div>
     );
 };

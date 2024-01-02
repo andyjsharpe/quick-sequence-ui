@@ -8,7 +8,7 @@
     background: #373e4d;
     border-radius: 20px;
     padding: 20px;
-    width: 200px;
+    width: 300px;
 }
 
 img {
@@ -17,24 +17,25 @@ img {
 }
 
 textarea {
-    margin: 10px;
+    margin: 4px;
     padding: 8px;
     resize: vertical;
 }
 
 input {
-    margin: 10px;
+    margin: 4px;
     padding: 8px;
 }
 
 button {
-    margin: 10px;
+    margin: 8px;
     cursor: pointer;
     background: orange;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 12px;
+    padding: 8px;
+    display: inline;
 }
 
 .result-container {
-    margin-top: 20px;
+    margin-top: 16px;
 }

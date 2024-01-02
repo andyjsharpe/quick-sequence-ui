@@ -26,7 +26,7 @@ function SaveButton({ frames }) {
 
     return (
         <button onClick={saveToFile}>
-            Save
+            <b>Save</b>
         </button>
     );
 }

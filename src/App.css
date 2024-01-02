@@ -7,6 +7,16 @@
   pointer-events: none;
 }
 
+.Nav {
+  margin-bottom: 10px;
+  width: 100%;
+  background-color: #373e4d;
+}
+
+.Inline {
+  display: inline;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

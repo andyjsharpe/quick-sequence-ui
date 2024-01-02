@@ -27,8 +27,9 @@ function LoadButton({ onFileRead }) {
     };
 
     return (
-        <div>
+        <div className="Inline">
             <input
+                name=""
                 type="file"
                 accept=".json"
                 style={{ display: 'none' }}
@@ -36,7 +37,7 @@ function LoadButton({ onFileRead }) {
                 onChange={handleFileChange}
             />
             <button onClick={openFileDialog}>
-                Load
+                <b>Load</b>
             </button>
         </div>
     );

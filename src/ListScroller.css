@@ -2,7 +2,7 @@
 .list-scroller {
     overflow-x: scroll;
     white-space: nowrap;
-    max-width: 90%;
+    max-width: 100%;
 }
 
 .scroll-container {

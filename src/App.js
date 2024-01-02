@@ -52,10 +52,12 @@ function App() {
   return (
     <div className="App">
         <header className="App-header">
-            Test Application:
-            <button onClick={increaseSize}>New Frame</button>
-            <SaveButton frames={frames}/>
-            <LoadButton onFileRead={overwrite}/>
+            <div className="Nav">
+                <b>Test Application:</b>
+                    <button onClick={increaseSize}><b>New Frame</b></button>
+                    <SaveButton frames={frames}/>
+                    <LoadButton onFileRead={overwrite}/>
+            </div>
             <ListScroller items={frames} callback={updateFrame}/>
         </header>
     </div>
