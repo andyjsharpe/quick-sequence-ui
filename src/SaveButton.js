@@ -13,7 +13,7 @@ function SaveButton({ frames }) {
         // Create a link element
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'data.json'; // Specify the filename
+        link.download = 'sequence.json'; // Specify the filename
 
         // Append the link to the document and trigger a click
         document.body.appendChild(link);

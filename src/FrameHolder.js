@@ -4,8 +4,16 @@ import "./FrameHolder.css";
 import Frame from "./App.js";
 import BlankFrame from "./App.js";
 
-async function postImage(data, imageUpdateFunction) {
-    const response = await fetch("http://127.0.0.1:7860/sdapi/v1/txt2img", {
+function FrameHolder({frame, callback}) {
+
+    const [imageData, setImageData] = useState(frame.image);
+    const [input1, setInput1] = useState(frame.positive);
+    const [input2, setInput2] = useState(frame.negative);
+    const [inputSeed, setInputSeed] = useState(frame.seed);
+    useEffect(sendCallback, [callback, frame, imageData, input1, input2, inputSeed])
+
+    async function postImage(data) {
+        const response = await fetch("http://127.0.0.1:7860/sdapi/v1/txt2img", {
             mode: 'cors',
             method: "POST",
             headers: {
@@ -13,15 +21,9 @@ async function postImage(data, imageUpdateFunction) {
             },
             body: JSON.stringify(data)
         }).then(response => response.json())
-            .then(data => imageUpdateFunction(data.images[0]))
+            .then(data => saveValues(setImageData, data.images[0]))
             .catch(error => console.error(error));
-}
-
-function FrameHolder({frame, callback}) {
-    const [imageData, setImageData] = useState(null);
-    const [input1, setInput1] = useState(frame.positive, );
-    const [input2, setInput2] = useState(frame.negative);
-    const [inputSeed, setInputSeed] = useState(frame.seed);
+    }
 
     const constantPayload = {
         styles: [
@@ -37,6 +39,7 @@ function FrameHolder({frame, callback}) {
         setInput1(frame.positive);
         setInput2(frame.negative);
         setInputSeed(frame.seed);
+        setImageData(frame.image);
     }, [frame]);
 
     //Instant image generation, ugly, but gives insight into composition
@@ -47,7 +50,7 @@ function FrameHolder({frame, callback}) {
             steps: 10,
             enable_hr: false,
             seed: inputSeed
-        }), setImageData);
+        }));
     };
 
     //Test image generation, will be quick but less detailed
@@ -58,7 +61,7 @@ function FrameHolder({frame, callback}) {
             steps: 30,
             enable_hr: false,
             seed: inputSeed
-        }), setImageData);
+        }));
     };
 
     //Hi-Res image generation, will be a bit slow, but much more detailed
@@ -69,7 +72,7 @@ function FrameHolder({frame, callback}) {
             steps: 30,
             enable_hr: true,
             seed: inputSeed
-        }), setImageData);
+        }));
     };
 
     //Final image generation, will be very slow but detailed
@@ -80,7 +83,7 @@ function FrameHolder({frame, callback}) {
             steps: 150,
             enable_hr: true,
             seed: inputSeed
-        }), setImageData);
+        }));
     };
 
     const handleMakeInt = (value) => {
@@ -90,13 +93,22 @@ function FrameHolder({frame, callback}) {
 
     function saveValues(updateFunction, value) {
         updateFunction(value);
-        frame = {id: frame.id, negative: input2, positive: input1, seed: inputSeed}
-        callback(frame, frame.id);
+    }
+
+    function sendCallback(){
+        const newFrame = Object.assign({}, frame);
+        newFrame.image = imageData;
+        newFrame.negative = input2;
+        newFrame.positive = input1;
+        newFrame.seed = inputSeed;
+        callback(newFrame, frame.id);
     }
 
     return (
         <div className="frame-holder">
-            <img src={`data:image/png;base64,${imageData}`}/>
+            <img
+                src={`data:image/png;base64,${imageData}`}
+            />
             <input
                 name="Seed"
                 value={inputSeed}

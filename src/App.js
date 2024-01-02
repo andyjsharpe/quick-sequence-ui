@@ -1,20 +1,16 @@
 //import logo from './logo.svg';
 import './App.css';
 import ListScroller from "./ListScroller";
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import SaveButton from './SaveButton';
 import LoadButton from "./LoadButton";
 
-const Frame = function(inId, inSeed, inPositive, inNegative) {
-    const id = inId;
-    const seed = inSeed;
-    const positive = inPositive;
-    const negative = inNegative;
-    return {'id': id, 'seed': seed, 'positive': positive, 'negative': negative};
+const Frame = function(inId, inSeed, inPositive, inNegative, inImage) {
+    return {'id': inId, 'seed': inSeed, 'positive': inPositive, 'negative': inNegative, 'image': inImage};
 };
 
 const BlankFrame = function(id) {
-    return Frame(id, 0, "", "");
+    return Frame(id, 0, "", "", null);
 }
 
 function App() {
@@ -44,7 +40,6 @@ function App() {
     }
 
     function overwrite(frameData) {
-        console.log(frameData)
         setFrames((prevArray) => frameData);
     }
 
