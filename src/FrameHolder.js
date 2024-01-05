@@ -32,7 +32,13 @@ function FrameHolder({frame, callback}) {
             "Detail"
         ],
         sampler_name: "DPM++ 2M Karras",
-        denoising_strength: 0.7
+        denoising_strength: 0.7,
+        alwayson_scripts: {
+            // https://github.com/hako-mikan/sd-webui-regional-prompter?tab=readme-ov-file#how-to-use-via-api
+            'Regional Prompter': {
+                //"1,1" assumes a half split, but this can be changed
+                "args": [true,false,"Matrix","Columns","Mask","Prompt","1,1,1,1","",false,false,false,"Attention",false,"0","0","0",""]
+            }}
     }
 
     useEffect(() => {
